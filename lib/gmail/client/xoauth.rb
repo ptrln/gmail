@@ -18,11 +18,8 @@ module Gmail
       end
 
       def login(raise_errors=false)
-        @imap and @logged_in = (login = @imap.authenticate('XOAUTH', username,
-          :consumer_key    => consumer_key,
-          :consumer_secret => consumer_secret,
-          :token           => token,
-          :token_secret    => secret
+        @imap and @logged_in = (login = @imap.authenticate('XOAUTH2', username,
+          :token           => token
         )) && login.name == 'OK'
       rescue
         raise_errors and raise AuthorizationError, "Couldn't login to given GMail account: #{username}"        
